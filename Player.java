@@ -2,7 +2,9 @@ package classes;
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.*;
- class Player {
+import java.io.IOException;
+
+class Player {
 
 
      JLabel label3 = new JLabel();
@@ -10,8 +12,11 @@ import java.awt.event.*;
      JTextField textField1 = new JTextField();
      JTextField textField2 = new JTextField();
 
+     Castle castle=new Castle();
+     Wallet wallet=new Wallet();
 
-     private int Current_Location = 60;
+
+     private int Current_Location = 0;
 
      public int getCurrent_Location() {
          return Current_Location;
@@ -33,81 +38,84 @@ import java.awt.event.*;
          Target_Location = target_Location;
      }
 
-     private final String Address_Image_Wall = "D:\\Programming\\intellij\\Traveling_Salesman\\image\\Walls.jpg";
+     public String getAddress_Image_Piece1() {
+         return "image\\m1.png";
+     }
 
-     private final String Address_Image_Market = "D:\\Programming\\intellij\\Traveling_Salesman\\image\\Market.jpg";
-     private final String Address_Image_Piece = "D:\\Programming\\intellij\\Traveling_Salesman\\image\\m1.png";
-     private final String Address_Image_Dice = "D:\\Programming\\intellij\\Traveling_Salesman\\image\\dicee.png";
-     private final String Address_Image_Dice1 = "D:\\Programming\\intellij\\Traveling_Salesman\\image\\dice11.jpg";
-     private final String Address_Image_Dice2 = "D:\\Programming\\intellij\\Traveling_Salesman\\image\\dice22.jpg";
-     private final String Address_Image_Dice3 = "D:\\Programming\\intellij\\Traveling_Salesman\\image\\dice33.jpg";
-     private final String Address_Image_Dice4 = "D:\\Programming\\intellij\\Traveling_Salesman\\image\\dice44.jpg";
-     private final String Address_Image_Dice5 = "D:\\Programming\\intellij\\Traveling_Salesman\\image\\dice55.jpg";
-     private final String Address_Image_Dice6 = "D:\\Programming\\intellij\\Traveling_Salesman\\image\\dice66.jpg";
-     private final String Address_Image_Trap = "D:\\Programming\\intellij\\Traveling_Salesman\\image\\Trap.jpg";
-     private final String Address_Image_Empty = "D:\\Programming\\intellij\\Traveling_Salesman\\image\\Empty.jpg";
-     private final String Address_Image_Treasure = "D:\\Programming\\intellij\\Traveling_Salesman\\image\\Treasure.jpg";
-     private final String Address_Image_Lost_Object = "D:\\Programming\\intellij\\Traveling_Salesman\\image\\Lost_Object.jpg";
+     public String getAddress_Image_Piece2() {
+         return "image\\m2.png";
+     }
 
-     private final String Address_Image_Castle="D:\\Programming\\intellij\\Traveling_Salesman\\image\\Castle.png";
+     public String getAddress_Image_Piece3() {
+         return "image\\m3.png";
+     }
 
-     public String getAddress_Image_Piece() {
-         return Address_Image_Piece;
+     public String getAddress_Image_Piece4() {
+         return "image\\m4.png";
+     }
+
+     public String getAddress_Image_Piece5() {
+         return "image\\m5.png";
+     }
+
+     public String getAddress_Image_Piece6() {
+         return "image\\m6.png";
      }
 
      public String getAddress_Image_Dice() {
-         return Address_Image_Dice;
+         return "image\\dice.png";
      }
 
      public String getAddress_Image_Dice1() {
-         return Address_Image_Dice1;
+         return "image\\dice1.png";
      }
 
      public String getAddress_Image_Dice2() {
-         return Address_Image_Dice2;
+         return "image\\dice2.png";
      }
 
      public String getAddress_Image_Dice3() {
-         return Address_Image_Dice3;
+         return "image\\dice3.png";
      }
 
      public String getAddress_Image_Dice4() {
-         return Address_Image_Dice4;
+         return "image\\dice4.png";
      }
 
      public String getAddress_Image_Dice5() {
-         return Address_Image_Dice5;
+         return "image\\dice5.png";
      }
 
      public String getAddress_Image_Dice6() {
-         return Address_Image_Dice6;
+         return "image\\dice6.png";
      }
 
      public String getAddress_Image_Wall() {
-         return Address_Image_Wall;
+         return "image\\Walls.jpg";
      }
 
      public String getAddress_Image_Trap() {
-         return Address_Image_Trap;
+         return "image\\Trap.png";
      }
 
      public String getAddress_Image_Market() {
-         return Address_Image_Market;
+         return "image\\market.png";
      }
 
      public String getAddress_Image_Lost_Object() {
-         return Address_Image_Lost_Object;
+         return "image\\Lost_Object.jpg";
      }
 
      public String getAddress_Image_Treasure() {
-         return Address_Image_Treasure;
+         return "image\\Treasure.png";
      }
 
      public String getAddress_Image_Empty() {
-         return Address_Image_Empty;
+         return "image\\Empty.jpg";
      }
 
-     public String getAddress_Image_Castle() {return Address_Image_Castle;}
+     public String getAddress_Image_Castle() {
+         return "image\\Castle.png";}
 
      private  int Dice = 0;
 
@@ -134,8 +142,7 @@ import java.awt.event.*;
 
      private final JPanel boardPanel;
 
-
-      JButton[][] cells;
+      public JButton[][] cells;
 
 
      JFrame frame = new JFrame();
@@ -220,7 +227,7 @@ import java.awt.event.*;
 
 
 
-     public Player() {
+     public Player(){
 
 
          frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
@@ -231,7 +238,7 @@ import java.awt.event.*;
          boardPanel=new JPanel(new GridLayout(BOARD_SIZE,BOARD_SIZE)){
              protected void paintComponent(Graphics g){
                  super.paintComponent(g);
-                 ImageIcon backgroundImage = new ImageIcon("D:\\Bluetooth\\blue.png");
+                 ImageIcon backgroundImage = new ImageIcon("image\\blue.png");
                  g.drawImage(backgroundImage.getImage(),0,0,null);
              }
          };
@@ -267,12 +274,13 @@ import java.awt.event.*;
 
          frame.add(boardPanel);
 
+         cells[0][0].setFocusPainted(false);
 
          cells[0][1].setBounds(0, 0, 10, 10);
          cells[0][1].addActionListener(new ActionListener() {
              public void actionPerformed(ActionEvent e) {
                  // Generate a random number between 1 and 6
-                 if (Permission_To_Dice == true) {
+                 if (Permission_To_Dice) {
 
                      Dice = Methods.DiceRand();
                      Permission_To_Dice = false;
@@ -285,19 +293,161 @@ import java.awt.event.*;
 
 
 
-         cells[0][9].setIcon(new ImageIcon("D:\\Programming\\intellij\\Traveling_Salesman\\image\\music.png"));
+         cells[0][9].setIcon(new ImageIcon("image\\music.jpg"));
          cells[0][9].addActionListener(new ActionListener() {
              @Override
              public void actionPerformed(ActionEvent e) {
-                 Music.frame5.setVisible(true);
+
+                     JDialog settingsDialog = new JDialog((Frame) null, Intro.title_setting, true);
+                     JPanel settingsPanel = new JPanel(new GridLayout(5, 1));
+
+                     String exit_text="";
+                     if (Value.language==1)exit_text="خروج از بازی";
+                     else exit_text="Exit Game";
+
+                     JButton musicButton = new JButton(Intro.music_text);
+                     JButton saveButton = new JButton();
+                     JButton saveButton2 = new JButton();
+                     JButton exitButton = new JButton(exit_text);
+
+                     String save="";
+                     if (Value.language==1)save="ذخیره بازی";
+                     else if (Value.language==2)save="Save Game";
+                     saveButton.setText(save);
+
+                 String save2="";
+                 if (Value.language==1)save2="ذخیره خودکار";
+                 else if (Value.language==2)save2="Auto Save";
+                 saveButton2.setText(save2);
+
+                 JButton closeButton2 = new JButton(Intro.close_setting);
+
+                 // Add action listeners to each button
+                 musicButton.addActionListener(event -> {
+                     settingsDialog.dispose();
+                     Music.frame5.setVisible(true);
+                 });
+                 saveButton.addActionListener(event -> {
+                     Value.setSave(true);
+                     String saveMessage="";
+                     if (Value.language==1)saveMessage=" بازی با موفقیت ذخیره شد!";
+                     else saveMessage="Game saved successfully!     ";
+                     String title="";
+                     if (Value.language==1)title="ذخیره";
+                     else title="Save";
+                     new ShowMessage(saveMessage,title,2500);
+                 });
+                 saveButton2.addActionListener(event -> {
+                     String saveMessage="";
+                     if (!Value.autoSave) {
+                         if (Value.language == 1) saveMessage = "ذخیره خودکار فعال شد!";
+                         else saveMessage = "Auto Save Activated!      ";
+                         Value.autoSave=true;
+                     }
+                     else {
+                         if (Value.language == 1) saveMessage = "ذخیره خودکار غیر فعال شد!";
+                         else saveMessage = "Auto Save UnActivated!      ";
+                         Value.autoSave=false;
+                     }
+                     String title="";
+                     if (Value.language==1)title="ذخیره";
+                     else title="Save";
+                     new ShowMessage(saveMessage,title,2500);
+                 });
+                 exitButton.addActionListener(event -> {
+                   System.exit(1);
+                 });
+                 closeButton2.addActionListener(event -> {
+                     settingsDialog.dispose(); // close the dialog
+                 });
+
+                 // Add the buttons to the panel
+                 settingsPanel.add(musicButton);
+                 settingsPanel.add(saveButton);
+                 settingsPanel.add(saveButton2);
+                 settingsPanel.add(exitButton);
+                 settingsPanel.add(closeButton2);
+
+                 musicButton.setFocusPainted(false);
+                 saveButton.setFocusPainted(false);
+                 saveButton2.setFocusPainted(false);
+                 exitButton.setFocusPainted(false);
+                 closeButton2.setFocusPainted(false);
+
+                 musicButton.setFont(new Font("serif",Font.BOLD,24));
+                 saveButton.setFont(new Font("serif",Font.BOLD,24));
+                 saveButton2.setFont(new Font("serif",Font.BOLD,24));
+                 exitButton.setFont(new Font("serif",Font.BOLD,24));
+                 closeButton2.setFont(new Font("serif",Font.BOLD,24));
+
+                 musicButton.addMouseListener(new java.awt.event.MouseAdapter() {
+                     public void mouseEntered(java.awt.event.MouseEvent evt) {
+                         musicButton.setBackground(Color.magenta); // set the background color to yellow when the mouse enters
+                     }
+
+                     public void mouseExited(java.awt.event.MouseEvent evt) {
+                         musicButton.setBackground(UIManager.getColor("control")); // set the background color to the default color when the mouse exits
+                     }
+                 });
+                 exitButton.addMouseListener(new java.awt.event.MouseAdapter() {
+                     public void mouseEntered(java.awt.event.MouseEvent evt) {
+                         exitButton.setBackground(Color.magenta); // set the background color to yellow when the mouse enters
+                     }
+
+                     public void mouseExited(java.awt.event.MouseEvent evt) {
+                         exitButton.setBackground(UIManager.getColor("control")); // set the background color to the default color when the mouse exits
+                     }
+                 });
+                 saveButton.addMouseListener(new java.awt.event.MouseAdapter() {
+                     public void mouseEntered(java.awt.event.MouseEvent evt) {
+                         saveButton.setBackground(Color.magenta); // set the background color to yellow when the mouse enters
+                     }
+
+                     public void mouseExited(java.awt.event.MouseEvent evt) {
+                         saveButton.setBackground(UIManager.getColor("control")); // set the background color to the default color when the mouse exits
+                     }
+                 });
+                 saveButton2.addMouseListener(new java.awt.event.MouseAdapter() {
+                     public void mouseEntered(java.awt.event.MouseEvent evt) {
+                         saveButton2.setBackground(Color.magenta); // set the background color to yellow when the mouse enters
+                     }
+
+                     public void mouseExited(java.awt.event.MouseEvent evt) {
+                         saveButton2.setBackground(UIManager.getColor("control")); // set the background color to the default color when the mouse exits
+                     }
+                 });
+                 closeButton2.addMouseListener(new java.awt.event.MouseAdapter() {
+                     public void mouseEntered(java.awt.event.MouseEvent evt) {
+                         closeButton2.setBackground(Color.red); // set the background color to yellow when the mouse enters
+                     }
+
+                     public void mouseExited(java.awt.event.MouseEvent evt) {
+                         closeButton2.setBackground(UIManager.getColor("control")); // set the background color to the default color when the mouse exits
+                     }
+                 });
+
+                 settingsDialog.add(settingsPanel);
+                 settingsDialog.setSize(300, 250);
+                 settingsDialog.setLocationRelativeTo(null);
+                 settingsDialog.setVisible(true);
+
              }
          });
 
          //ردیف اول
+         cells[0][0].addActionListener(new ActionListener() {
+             public void actionPerformed(ActionEvent e) {
+                 Value.viewQuest=true;
+             }
+         });
+
 
          cells[0][3].addActionListener(new ActionListener() {
              public void actionPerformed(ActionEvent e) {
-                 new Wallet();
+                 wallet.setVisible(false);
+                 wallet=null;
+                 wallet=new Wallet();
+                 wallet.setVisible(true);
              }
          });
 
@@ -305,7 +455,7 @@ import java.awt.event.*;
          cells[1][0].addActionListener(new ActionListener() {
              public void actionPerformed(ActionEvent e) {
                  Target_Location = 1;
-                 if (Current_Location >= 0 && Methods.Permission_To_Move(Current_Location, Target_Location) == true && Dice > 0&&Methods.Check_Wall(Target_Location)==false) {
+                 if (Current_Location >= 0 && Methods.Permission_To_Move(Current_Location, Target_Location) && Dice > 0&&!Methods.Check_Wall(Target_Location)) {
                      Dice -= 1;
                      Change_Dice = 1;
                  }
@@ -314,7 +464,7 @@ import java.awt.event.*;
          cells[1][1].addActionListener(new ActionListener() {
              public void actionPerformed(ActionEvent e) {
                  Target_Location = 2;
-                 if (Current_Location > 0 && Methods.Permission_To_Move(Current_Location, Target_Location) == true && Dice > 0&&Methods.Check_Wall(Target_Location)==false) {
+                 if (Current_Location > 0 && Methods.Permission_To_Move(Current_Location, Target_Location) && Dice > 0&&!Methods.Check_Wall(Target_Location)) {
                      Dice -= 1;
                      Change_Dice = 1;
                  }
@@ -323,7 +473,7 @@ import java.awt.event.*;
          cells[1][2].addActionListener(new ActionListener() {
              public void actionPerformed(ActionEvent e) {
                  Target_Location = 3;
-                 if (Current_Location > 0 && Methods.Permission_To_Move(Current_Location, Target_Location) == true && Dice > 0&&Methods.Check_Wall(Target_Location)==false) {
+                 if (Current_Location > 0 && Methods.Permission_To_Move(Current_Location, Target_Location) && Dice > 0&&!Methods.Check_Wall(Target_Location)) {
                      Dice -= 1;
                      Change_Dice = 1;
                  }
@@ -332,7 +482,7 @@ import java.awt.event.*;
          cells[1][3].addActionListener(new ActionListener() {
              public void actionPerformed(ActionEvent e) {
                  Target_Location = 4;
-                 if (Current_Location > 0 && Methods.Permission_To_Move(Current_Location, Target_Location) == true && Dice > 0&&Methods.Check_Wall(Target_Location)==false) {
+                 if (Current_Location > 0 && Methods.Permission_To_Move(Current_Location, Target_Location) && Dice > 0&&!Methods.Check_Wall(Target_Location)) {
                      Dice -= 1;
                      Change_Dice = 1;
                  }
@@ -341,7 +491,7 @@ import java.awt.event.*;
          cells[1][4].addActionListener(new ActionListener() {
              public void actionPerformed(ActionEvent e) {
                  Target_Location = 5;
-                 if (Current_Location > 0 && Methods.Permission_To_Move(Current_Location, Target_Location) == true && Dice > 0&&Methods.Check_Wall(Target_Location)==false) {
+                 if (Current_Location > 0 && Methods.Permission_To_Move(Current_Location, Target_Location) && Dice > 0&& !Methods.Check_Wall(Target_Location)) {
                      Dice -= 1;
                      Change_Dice = 1;
                  }
@@ -350,7 +500,7 @@ import java.awt.event.*;
          cells[1][5].addActionListener(new ActionListener() {
              public void actionPerformed(ActionEvent e) {
                  Target_Location = 6;
-                 if (Current_Location > 0 && Methods.Permission_To_Move(Current_Location, Target_Location) == true && Dice > 0&&Methods.Check_Wall(Target_Location)==false) {
+                 if (Current_Location > 0 && Methods.Permission_To_Move(Current_Location, Target_Location) && Dice > 0&& !Methods.Check_Wall(Target_Location)) {
                      Dice -= 1;
                      Change_Dice = 1;
                  }
@@ -359,7 +509,7 @@ import java.awt.event.*;
          cells[1][6].addActionListener(new ActionListener() {
              public void actionPerformed(ActionEvent e) {
                  Target_Location = 7;
-                 if (Current_Location > 0 && Methods.Permission_To_Move(Current_Location, Target_Location) == true && Dice > 0&&Methods.Check_Wall(Target_Location)==false) {
+                 if (Current_Location > 0 && Methods.Permission_To_Move(Current_Location, Target_Location) && Dice > 0&& !Methods.Check_Wall(Target_Location)) {
                      Dice -= 1;
                      Change_Dice = 1;
                  }
@@ -368,7 +518,7 @@ import java.awt.event.*;
          cells[1][7].addActionListener(new ActionListener() {
              public void actionPerformed(ActionEvent e) {
                  Target_Location = 8;
-                 if (Current_Location > 0 && Methods.Permission_To_Move(Current_Location, Target_Location) == true && Dice > 0&&Methods.Check_Wall(Target_Location)==false) {
+                 if (Current_Location > 0 && Methods.Permission_To_Move(Current_Location, Target_Location) && Dice > 0&& !Methods.Check_Wall(Target_Location)) {
                      Dice -= 1;
                      Change_Dice = 1;
                  }
@@ -377,7 +527,7 @@ import java.awt.event.*;
          cells[1][8].addActionListener(new ActionListener() {
              public void actionPerformed(ActionEvent e) {
                  Target_Location = 9;
-                 if (Current_Location > 0 && Methods.Permission_To_Move(Current_Location, Target_Location) == true && Dice > 0&&Methods.Check_Wall(Target_Location)==false) {
+                 if (Current_Location > 0 && Methods.Permission_To_Move(Current_Location, Target_Location) && Dice > 0&& !Methods.Check_Wall(Target_Location)) {
                      Dice -= 1;
                      Change_Dice = 1;
                  }
@@ -386,7 +536,7 @@ import java.awt.event.*;
          cells[1][9].addActionListener(new ActionListener() {
              public void actionPerformed(ActionEvent e) {
                  Target_Location = 10;
-                 if (Current_Location > 0 && Methods.Permission_To_Move(Current_Location, Target_Location) == true && Dice > 0&&Methods.Check_Wall(Target_Location)==false) {
+                 if (Current_Location > 0 && Methods.Permission_To_Move(Current_Location, Target_Location) && Dice > 0&& !Methods.Check_Wall(Target_Location)) {
                      Dice -= 1;
                      Change_Dice = 1;
                  }
@@ -395,7 +545,7 @@ import java.awt.event.*;
          cells[1][10].addActionListener(new ActionListener() {
              public void actionPerformed(ActionEvent e) {
                  Target_Location = 11;
-                 if (Current_Location > 0 && Methods.Permission_To_Move(Current_Location, Target_Location) == true && Dice > 0&&Methods.Check_Wall(Target_Location)==false) {
+                 if (Current_Location > 0 && Methods.Permission_To_Move(Current_Location, Target_Location) && Dice > 0&& !Methods.Check_Wall(Target_Location)) {
                      Dice -= 1;
                      Change_Dice = 1;
                  }
@@ -407,7 +557,7 @@ import java.awt.event.*;
          cells[2][0].addActionListener(new ActionListener() {
              public void actionPerformed(ActionEvent e) {
                  Target_Location = 12;
-                 if (Current_Location > 0 && Methods.Permission_To_Move(Current_Location, Target_Location) == true && Dice > 0&&Methods.Check_Wall(Target_Location)==false) {
+                 if (Current_Location > 0 && Methods.Permission_To_Move(Current_Location, Target_Location) && Dice > 0&& !Methods.Check_Wall(Target_Location)) {
                      Dice -= 1;
                      Change_Dice = 1;
                  }
@@ -416,7 +566,7 @@ import java.awt.event.*;
          cells[2][1].addActionListener(new ActionListener() {
              public void actionPerformed(ActionEvent e) {
                  Target_Location = 13;
-                 if (Current_Location > 0 && Methods.Permission_To_Move(Current_Location, Target_Location) == true && Dice > 0&&Methods.Check_Wall(Target_Location)==false) {
+                 if (Current_Location > 0 && Methods.Permission_To_Move(Current_Location, Target_Location) && Dice > 0&& !Methods.Check_Wall(Target_Location)) {
                      Dice -= 1;
                      Change_Dice = 1;
                  }
@@ -425,7 +575,7 @@ import java.awt.event.*;
          cells[2][2].addActionListener(new ActionListener() {
              public void actionPerformed(ActionEvent e) {
                  Target_Location = 14;
-                 if (Current_Location > 0 && Methods.Permission_To_Move(Current_Location, Target_Location) == true && Dice > 0&&Methods.Check_Wall(Target_Location)==false) {
+                 if (Current_Location > 0 && Methods.Permission_To_Move(Current_Location, Target_Location) && Dice > 0&& !Methods.Check_Wall(Target_Location)) {
                      Dice -= 1;
                      Change_Dice = 1;
                  }
@@ -434,7 +584,7 @@ import java.awt.event.*;
          cells[2][3].addActionListener(new ActionListener() {
              public void actionPerformed(ActionEvent e) {
                  Target_Location = 15;
-                 if (Current_Location > 0 && Methods.Permission_To_Move(Current_Location, Target_Location) == true && Dice > 0&&Methods.Check_Wall(Target_Location)==false) {
+                 if (Current_Location > 0 && Methods.Permission_To_Move(Current_Location, Target_Location) && Dice > 0&& !Methods.Check_Wall(Target_Location)) {
                      Dice -= 1;
                      Change_Dice = 1;
                  }
@@ -443,7 +593,7 @@ import java.awt.event.*;
          cells[2][4].addActionListener(new ActionListener() {
              public void actionPerformed(ActionEvent e) {
                  Target_Location = 16;
-                 if (Current_Location > 0 && Methods.Permission_To_Move(Current_Location, Target_Location) == true && Dice > 0&&Methods.Check_Wall(Target_Location)==false) {
+                 if (Current_Location > 0 && Methods.Permission_To_Move(Current_Location, Target_Location) && Dice > 0&& !Methods.Check_Wall(Target_Location)) {
                      Dice -= 1;
                      Change_Dice = 1;
                  }
@@ -452,7 +602,7 @@ import java.awt.event.*;
          cells[2][5].addActionListener(new ActionListener() {
              public void actionPerformed(ActionEvent e) {
                  Target_Location = 17;
-                 if (Current_Location > 0 && Methods.Permission_To_Move(Current_Location, Target_Location) == true && Dice > 0&&Methods.Check_Wall(Target_Location)==false) {
+                 if (Current_Location > 0 && Methods.Permission_To_Move(Current_Location, Target_Location) && Dice > 0&& !Methods.Check_Wall(Target_Location)) {
                      Dice -= 1;
                      Change_Dice = 1;
                  }
@@ -461,7 +611,7 @@ import java.awt.event.*;
          cells[2][6].addActionListener(new ActionListener() {
              public void actionPerformed(ActionEvent e) {
                  Target_Location = 18;
-                 if (Current_Location > 0 && Methods.Permission_To_Move(Current_Location, Target_Location) == true && Dice > 0&&Methods.Check_Wall(Target_Location)==false) {
+                 if (Current_Location > 0 && Methods.Permission_To_Move(Current_Location, Target_Location) && Dice > 0&& !Methods.Check_Wall(Target_Location)) {
                      Dice -= 1;
                      Change_Dice = 1;
                  }
@@ -470,7 +620,7 @@ import java.awt.event.*;
          cells[2][7].addActionListener(new ActionListener() {
              public void actionPerformed(ActionEvent e) {
                  Target_Location = 19;
-                 if (Current_Location > 0 && Methods.Permission_To_Move(Current_Location, Target_Location) == true && Dice > 0&&Methods.Check_Wall(Target_Location)==false) {
+                 if (Current_Location > 0 && Methods.Permission_To_Move(Current_Location, Target_Location) && Dice > 0&& !Methods.Check_Wall(Target_Location)) {
                      Dice -= 1;
                      Change_Dice = 1;
                  }
@@ -479,7 +629,7 @@ import java.awt.event.*;
          cells[2][8].addActionListener(new ActionListener() {
              public void actionPerformed(ActionEvent e) {
                  Target_Location = 20;
-                 if (Current_Location > 0 && Methods.Permission_To_Move(Current_Location, Target_Location) == true && Dice > 0&&Methods.Check_Wall(Target_Location)==false) {
+                 if (Current_Location > 0 && Methods.Permission_To_Move(Current_Location, Target_Location) && Dice > 0&& !Methods.Check_Wall(Target_Location)) {
                      Dice -= 1;
                      Change_Dice = 1;
                  }
@@ -488,7 +638,7 @@ import java.awt.event.*;
          cells[2][9].addActionListener(new ActionListener() {
              public void actionPerformed(ActionEvent e) {
                  Target_Location = 21;
-                 if (Current_Location > 0 && Methods.Permission_To_Move(Current_Location, Target_Location) == true && Dice > 0&&Methods.Check_Wall(Target_Location)==false) {
+                 if (Current_Location > 0 && Methods.Permission_To_Move(Current_Location, Target_Location) && Dice > 0&& !Methods.Check_Wall(Target_Location)) {
                      Dice -= 1;
                      Change_Dice = 1;
                  }
@@ -497,7 +647,7 @@ import java.awt.event.*;
          cells[2][10].addActionListener(new ActionListener() {
              public void actionPerformed(ActionEvent e) {
                  Target_Location = 22;
-                 if (Current_Location > 0 && Methods.Permission_To_Move(Current_Location, Target_Location) == true && Dice > 0&&Methods.Check_Wall(Target_Location)==false) {
+                 if (Current_Location > 0 && Methods.Permission_To_Move(Current_Location, Target_Location) && Dice > 0&& !Methods.Check_Wall(Target_Location)) {
                      Dice -= 1;
                      Change_Dice = 1;
                  }
@@ -509,7 +659,7 @@ import java.awt.event.*;
          cells[3][0].addActionListener(new ActionListener() {
              public void actionPerformed(ActionEvent e) {
                  Target_Location = 23;
-                 if (Current_Location > 0 && Methods.Permission_To_Move(Current_Location, Target_Location) == true && Dice > 0&&Methods.Check_Wall(Target_Location)==false) {
+                 if (Current_Location > 0 && Methods.Permission_To_Move(Current_Location, Target_Location) && Dice > 0&& !Methods.Check_Wall(Target_Location)) {
                      Dice -= 1;
                      Change_Dice = 1;
                  }
@@ -518,7 +668,7 @@ import java.awt.event.*;
          cells[3][1].addActionListener(new ActionListener() {
              public void actionPerformed(ActionEvent e) {
                  Target_Location = 24;
-                 if (Current_Location > 0 && Methods.Permission_To_Move(Current_Location, Target_Location) == true && Dice > 0&&Methods.Check_Wall(Target_Location)==false) {
+                 if (Current_Location > 0 && Methods.Permission_To_Move(Current_Location, Target_Location) && Dice > 0&&Methods.Check_Wall(Target_Location)==false) {
                      Dice -= 1;
                      Change_Dice = 1;
                  }
@@ -692,7 +842,7 @@ import java.awt.event.*;
          cells[4][9].addActionListener(new ActionListener() {
              public void actionPerformed(ActionEvent e) {
                  Target_Location = 43;
-                 if (Current_Location > 0 && Methods.Permission_To_Move(Current_Location, Target_Location) == true && Dice > 0&&Methods.Check_Wall(Target_Location)==false) {
+                 if (Current_Location > 0 && Methods.Permission_To_Move(Current_Location, Target_Location) == true && Dice > 0&& !Methods.Check_Wall(Target_Location)) {
                      Dice -= 1;
                      Change_Dice = 1;
                  }
@@ -864,13 +1014,16 @@ import java.awt.event.*;
                      Dice -= 1;
                      Change_Dice = 1;
                  }
-                 new Castle();
+                 castle.setVisible(false);
+                 castle=null;
+                 castle=new Castle();
+                 castle.setVisible(true);
              }
          });
          cells[6][6].addActionListener(new ActionListener() {
              public void actionPerformed(ActionEvent e) {
                  Target_Location = 62;
-                 if (Current_Location > 0 && Methods.Permission_To_Move(Current_Location, Target_Location) == true && Dice > 0&&Methods.Check_Wall(Target_Location)==false) {
+                 if (Current_Location > 0 && Methods.Permission_To_Move(Current_Location, Target_Location) && Dice > 0&& !Methods.Check_Wall(Target_Location)) {
                      Dice -= 1;
                      Change_Dice = 1;
                  }
@@ -897,7 +1050,7 @@ import java.awt.event.*;
          cells[6][9].addActionListener(new ActionListener() {
              public void actionPerformed(ActionEvent e) {
                  Target_Location = 65;
-                 if (Current_Location > 0 && Methods.Permission_To_Move(Current_Location, Target_Location) == true && Dice > 0&&Methods.Check_Wall(Target_Location)==false) {
+                 if (Current_Location > 0 && Methods.Permission_To_Move(Current_Location, Target_Location) && Dice > 0&&Methods.Check_Wall(Target_Location)==false) {
                      Dice -= 1;
                      Change_Dice = 1;
                  }
@@ -906,7 +1059,7 @@ import java.awt.event.*;
          cells[6][10].addActionListener(new ActionListener() {
              public void actionPerformed(ActionEvent e) {
                  Target_Location = 66;
-                 if (Current_Location > 0 && Methods.Permission_To_Move(Current_Location, Target_Location) == true && Dice > 0&&Methods.Check_Wall(Target_Location)==false) {
+                 if (Current_Location > 0 && Methods.Permission_To_Move(Current_Location, Target_Location) && Dice > 0&&Methods.Check_Wall(Target_Location)==false) {
                      Dice -= 1;
                      Change_Dice = 1;
                  }

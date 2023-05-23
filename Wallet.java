@@ -2,45 +2,49 @@ package classes;
 import javax.swing.*;
 import javax.swing.table.DefaultTableModel;
 import java.awt.*;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 
-public class Wallet {
-    private JFrame bagFrame;
-    private JPanel bagPanel;
-    private JTable bagTable;
-    private DefaultTableModel bagTableModel;
+public class Wallet extends JFrame{
 
-    public Wallet() {
-        bagFrame = new JFrame("Wallet");
-        bagFrame.setBounds(750, 0, 400, 400);
-        bagFrame.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
+        private JTable playerTable;
+        private JScrollPane scrollPane;
 
-        bagPanel = new JPanel(new BorderLayout()) {
-            // Override the paintComponent method to add a background image
-            @Override
-            protected void paintComponent(Graphics g) {
-                super.paintComponent(g);
-                ImageIcon bgImage = new ImageIcon(getClass().getResource(""));
-                g.drawImage(bgImage.getImage(), 0, 0, getWidth(), getHeight(), null);
-            }
-        };
+        public Wallet() {
+            // Create the table with player data
+            String[] columnNames = { "Player",Castle.text2, Castle.text3, Castle.text4 ,Market.text14,Market.text7,Market.text24,Market.text35,Market.text31,Market.text28,Market.text19};
+            Object[][] data = {
+                    {Castle.text5, Value.getPower_Player1(), Value.getMoney_Player1(),Value.getPower_Player1()*5+Value.getMoney_Player1(),Value.getSword_player1(),Value.getShield_player1(),Value.getFood_player1(),Value.getBow_player1(),Value.getBook_player1(),Value.getPotion_player1(),Value.getArmor_player1()},
+                    {Castle.text6, Value.getPower_Player2(), Value.getMoney_Player2(), Value.getPower_Player2()*5+Value.getMoney_Player2(),Value.getSword_player2(),Value.getShield_player2(),Value.getFood_player2(),Value.getBow_player2(),Value.getBook_player2(),Value.getPotion_player2(),Value.getArmor_player2()},
+                    {Castle.text7,  Value.getPower_Player3(), Value.getMoney_Player3(), Value.getPower_Player3()*5+Value.getMoney_Player3(),Value.getSword_player3(),Value.getShield_player3(),Value.getFood_player3(),Value.getBow_player3(),Value.getBook_player3(),Value.getPotion_player3(),Value.getArmor_player3()},
+                    {Castle.text8, Value.getPower_Player4(), Value.getMoney_Player4(), Value.getPower_Player4()*5+Value.getMoney_Player4(),Value.getSword_player4(),Value.getShield_player4(),Value.getFood_player4(),Value.getBow_player4(),Value.getBook_player4(),Value.getPotion_player4(),Value.getArmor_player4()},
+            };
+            playerTable = new JTable(data, columnNames);
 
-        // Create table with columns for item name, power, score, and money
-        bagTableModel = new DefaultTableModel(new Object[][]{}, new String[]{"اشیا", "قدرت", "امتیاز", "پول"});
-        bagTable = new JTable(bagTableModel);
-        JScrollPane scrollPane = new JScrollPane(bagTable);
+//            playerTable.getColumnModel().getColumn(1).setPreferredWidth(150);
+            // Add the table to a scroll pane
+            scrollPane = new JScrollPane(playerTable);
+            // Add a label for the chests codes and a text field to enter new codes
 
-        bagPanel.add(scrollPane, BorderLayout.CENTER);
+            // Add a button to check the code and show a message if the player is the owner of the chest
 
-        // Create close button
-        JButton closeButton = new JButton("خروج");
-        closeButton.addActionListener(e -> bagFrame.dispose());
-        bagPanel.add(closeButton, BorderLayout.SOUTH);
+            // Create a container panel for the scroll pane and the chests panel
+            JPanel container = new JPanel(new BorderLayout());
+            container.add(scrollPane, BorderLayout.CENTER);
+            container.setBounds(0,0,700,180);
+            // Set the size and position of the window
+            setSize(700, 180);
+            setLocationRelativeTo(null);
 
-        bagFrame.add(bagPanel);
-        bagFrame.setVisible(true);
+
+
+
+            // Add the container panel to the window
+            add(container);
+
+            // Set the window to be visible
+            setVisible(false);
+
     }
 
-    public void addItem(String itemName, int power, int score, int money) {
-        bagTableModel.addRow(new Object[]{itemName, power, score, money});
-    }
 }

@@ -34,77 +34,84 @@ public class Single_Player {
         Target_Location = target_Location;
     }
 
-    private final String Address_Image_Wall = "D:\\Programming\\intellij\\Traveling_Salesman\\image\\Walls.gif";
+    public String getAddress_Image_Piece1() {
+        return "image\\m1.png";
+    }
 
-    private final String Address_Image_Market = "D:\\Programming\\intellij\\Traveling_Salesman\\image\\Market.jpg";
-    private final String Address_Image_Piece = "D:\\Programming\\intellij\\Traveling_Salesman\\image\\m1.png";
-    private final String Address_Image_Dice = "D:\\Programming\\intellij\\Traveling_Salesman\\image\\dicee.png";
-    private final String Address_Image_Dice1 = "D:\\Programming\\intellij\\Traveling_Salesman\\image\\dice11.jpg";
-    private final String Address_Image_Dice2 = "D:\\Programming\\intellij\\Traveling_Salesman\\image\\dice22.jpg";
-    private final String Address_Image_Dice3 = "D:\\Programming\\intellij\\Traveling_Salesman\\image\\dice33.jpg";
-    private final String Address_Image_Dice4 = "D:\\Programming\\intellij\\Traveling_Salesman\\image\\dice44.jpg";
-    private final String Address_Image_Dice5 = "D:\\Programming\\intellij\\Traveling_Salesman\\image\\dice55.jpg";
-    private final String Address_Image_Dice6 = "D:\\Programming\\intellij\\Traveling_Salesman\\image\\dice66.jpg";
-    private final String Address_Image_Trap = "D:\\Programming\\intellij\\Traveling_Salesman\\image\\Trap.jpg";
-    private final String Address_Image_Empty = "D:\\Programming\\intellij\\Traveling_Salesman\\image\\Empty.jpg";
-    private final String Address_Image_Treasure = "D:\\Programming\\intellij\\Traveling_Salesman\\image\\Treasure.jpg";
-    private final String Address_Image_Lost_Object = "D:\\Programming\\intellij\\Traveling_Salesman\\image\\Lost_Object.jpg";
+    public String getAddress_Image_Piece2() {
+        return "image\\m2.png";
+    }
 
-    public String getAddress_Image_Piece() {
-        return Address_Image_Piece;
+    public String getAddress_Image_Piece3() {
+        return "image\\m3.png";
+    }
+
+    public String getAddress_Image_Piece4() {
+        return "image\\m4.png";
+    }
+
+    public String getAddress_Image_Piece5() {
+        return "image\\m5.png";
+    }
+
+    public String getAddress_Image_Piece6() {
+        return "image\\m6.png";
     }
 
     public String getAddress_Image_Dice() {
-        return Address_Image_Dice;
+        return "image\\dice.png";
     }
 
     public String getAddress_Image_Dice1() {
-        return Address_Image_Dice1;
+        return "image\\dice1.png";
     }
 
     public String getAddress_Image_Dice2() {
-        return Address_Image_Dice2;
+        return "image\\dice2.png";
     }
 
     public String getAddress_Image_Dice3() {
-        return Address_Image_Dice3;
+        return "image\\dice3.png";
     }
 
     public String getAddress_Image_Dice4() {
-        return Address_Image_Dice4;
+        return "image\\dice4.png";
     }
 
     public String getAddress_Image_Dice5() {
-        return Address_Image_Dice5;
+        return "image\\dice5.png";
     }
 
     public String getAddress_Image_Dice6() {
-        return Address_Image_Dice6;
+        return "image\\dice6.png";
     }
 
     public String getAddress_Image_Wall() {
-        return Address_Image_Wall;
+        return "image\\Walls.jpg";
     }
 
     public String getAddress_Image_Trap() {
-        return Address_Image_Trap;
+        return "image\\Trap.png";
     }
 
     public String getAddress_Image_Market() {
-        return Address_Image_Market;
+        return "image\\market.png";
     }
 
     public String getAddress_Image_Lost_Object() {
-        return Address_Image_Lost_Object;
+        return "image\\Lost_Object.jpg";
     }
 
     public String getAddress_Image_Treasure() {
-        return Address_Image_Treasure;
+        return "image\\Treasure.png";
     }
 
     public String getAddress_Image_Empty() {
-        return Address_Image_Empty;
+        return "image\\Empty.jpg";
     }
+
+    public String getAddress_Image_Castle() {
+        return "image\\Castle.png";}
 
     int Dice = 0;
 
@@ -123,7 +130,7 @@ public class Single_Player {
     private static final int BOARD_SIZE = 12;
     private static final int CELL_SIZE = 50;
 
-    private final JPanel boardPanel = new JPanel();
+    private final JPanel boardPanel ;
 
 
     JButton[][] cells;
@@ -216,14 +223,22 @@ public class Single_Player {
 
 
     Single_Player(){
+
+
+
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         frame.setTitle("Traveling Salesman");
         frame.setBounds(0, 0, 1550, 830);
 
+        boardPanel=new JPanel(new GridLayout(BOARD_SIZE,BOARD_SIZE)){
+            protected void paintComponent(Graphics g){
+                super.paintComponent(g);
+                ImageIcon backgroundImage = new ImageIcon("image\\blue.png");
+                g.drawImage(backgroundImage.getImage(),0,0,null);
+            }
+        };
 
-        boardPanel.setLayout(new GridLayout(BOARD_SIZE, BOARD_SIZE));
         boardPanel.setBorder(BorderFactory.createEmptyBorder(0, 100, 10, 100));
-
         cells = new JButton[BOARD_SIZE][BOARD_SIZE];
 
         // Add cells to the board panel
@@ -238,9 +253,6 @@ public class Single_Player {
                 }
                 if (i != 0) cells[i][j].setBackground(Color.ORANGE);
                 if (i == 0 && j != 0) cells[i][j].setBackground(Color.white);
-                if (i == 6 && j == 5) {
-                    cells[i][j].setBackground(Color.GREEN);
-                }
 
 
                 cells[i][j].setPreferredSize(new Dimension(CELL_SIZE, CELL_SIZE));
@@ -252,7 +264,7 @@ public class Single_Player {
         }
 
         frame.add(boardPanel);
-
+        cells[0][9].setIcon(new ImageIcon("D:\\Programming\\intellij\\Traveling_Salesman\\image\\music.jpg"));
 
         cells[0][1].setBounds(0, 0, 10, 10);
         cells[0][1].addActionListener(new ActionListener() {
@@ -272,7 +284,7 @@ public class Single_Player {
 
 
 
-
+        cells[0][0].setFocusPainted(false);
 
 
 

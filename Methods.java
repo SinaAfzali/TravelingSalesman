@@ -78,6 +78,13 @@ public class Methods {
     }
 
 
+    public static int Quest_Rand(){
+        Random quest=new Random();
+        int x=quest.nextInt(8)+1;
+        return x;
+    }
+
+
     public static int Cell_Rand1() {
         int x = 0;
         Random rand = new Random();
@@ -435,25 +442,25 @@ public class Methods {
         int rand_music = rand.nextInt(10) + 1;
         switch (rand_music) {
             case 1:
-                return "D:\\Programming\\intellij\\Traveling_Salesman\\music\\1.mp3";
+                return "music\\1.mp3";
             case 2:
-                return "D:\\Programming\\intellij\\Traveling_Salesman\\music\\2.mp3";
+                return "music\\2.mp3";
             case 3:
-                return "D:\\Programming\\intellij\\Traveling_Salesman\\music\\3.mp3";
+                return "music\\3.mp3";
             case 4:
-                return "D:\\Programming\\intellij\\Traveling_Salesman\\music\\4.mp3";
+                return "music\\4.mp3";
             case 5:
-                return "D:\\Programming\\intellij\\Traveling_Salesman\\music\\5.mp3";
+                return "music\\5.mp3";
             case 6:
-                return "D:\\Programming\\intellij\\Traveling_Salesman\\music\\6.mp3";
+                return "music\\6.mp3";
             case 7:
-                return "D:\\Programming\\intellij\\Traveling_Salesman\\music\\7.mp3";
+                return "music\\7.mp3";
             case 8:
-                return "D:\\Programming\\intellij\\Traveling_Salesman\\music\\8.mp3";
+                return "music\\8.mp3";
             case 9:
-                return "D:\\Programming\\intellij\\Traveling_Salesman\\music\\9.mp3";
+                return "music\\9.mp3";
             case 10:
-                return "D:\\Programming\\intellij\\Traveling_Salesman\\music\\10.mp3";
+                return "music\\10.mp3";
         }
         return "";
     }
@@ -463,55 +470,40 @@ public class Methods {
         for (int i = 0; i < 7; i++) {
             if (location == paste[i]) point -= 10000;
         }
-        for (int i = 0; i < 121; i++) {
-            if (location == paste2[i]) point -= 3500;
-            if (location==Value.getTrap1())point-=5000;
-            if (location==Value.getTrap2())point-=5000;
-            if (location==Value.getTrap3())point-=5000;
-            if (location==Value.getTrap4())point-=5000;
-            if (location==Value.getTrap5())point-=5000;
-            if (location==Value.getTrap6())point-=5000;
+        for (int i=0;i<121;i++){
+            if (location==paste2[i])point-=2000;
         }
-        if (location % 11 == 1 && status == 1) point -= 10000;
-        if (location % 11 == 0 && status == 2) point -= 10000;
-        if (location < 1 && status == 3) point -= 10000;
-        if (location > 121 && status == 4) point -= 10000;
+        if (location==Value.getTrap1()||location==Value.getTrap2()||
+        location==Value.getTrap3()||location==Value.getTrap4()||
+        location==Value.getTrap5()||location==Value.getTrap6())point-=3500;
+
+        if (location==Value.getWall1())point-=10000;
+        if (location==Value.getWall2())point-=10000;
+        if (location==Value.getWall3())point-=10000;
+        if (location==Value.getWall4())point-=10000;
+        if (location==Value.getWall5())point-=10000;
+        if (location==Value.getWall6())point-=10000;
+        if (location==Value.getWall7())point-=10000;
+        if (location==Value.getWall8())point-=10000;
 
 
-        int x=61-location;
-        if (x<0)x*=-1;
-        point+=(121-x)*610;
+        if (location%11==1&&status==1)point-=10000;
+        if (location%11==0&&status==2)point-=10000;
+        if (location<1&&status==3)point-=10000;
+        if (location>121&&status==4)point-=10000;
 
-        if (Value.isObject1()) point += (121-(Value.getLost_Object1() - location));
-        if (Value.isObject2()) point += (121-(Value.getLost_Object2() - location));
-        if (Value.isObject3()) point += (121-(Value.getLost_Object3() - location));
-        if (Value.isObject4()) point += (121-(Value.getLost_Object4() - location));
-        if (Value.isObject5()) point += (121-(Value.getLost_Object5() - location));
-        if (Value.isObject6()) point += (121-(Value.getLost_Object6() - location));
-        if (Value.isObject7()) point +=(121-(Value.getLost_Object7() - location));
-        if (Value.isObject8()) point += (121-(Value.getLost_Object8() - location));
-        if (Value.isObject9()) point += (121-(Value.getLost_Object9() - location));
-        if (Value.isObject10()) point += (121-(Value.getLost_Object10() - location));
-        if (Value.isObject11()) point += (121-(Value.getLost_Object11() - location));
-        if (Value.isObject12()) point += (121-(Value.getLost_Object12() - location));
-        if (Value.isObject13()) point += (121-(Value.getLost_Object13() - location));
-        if (Value.isObject14()) point += (121-(Value.getLost_Object14() - location));
-        if (Value.isObject15()) point += (121-(Value.getLost_Object15() - location));
-        if (Value.isObject16()) point += (121-(Value.getLost_Object16() - location));
 
-        if (Value.isTreasure1_Diamond_Ring_Status())point += 5 * (121-(Value.getTreasure1_Diamond_Ring() - location));
-        if (Value.isTreasure2_Jeweled_Sword_Status())point += 5 * (121-(Value.getTreasure2_Jeweled_Sword() - location));
-        if (Value.isTreasure7_Golden_Key_Status())point += 5 * (121-(Value.getTreasure7_Golden_Key() - location));
-        if (Value.isTreasure8_Dragon_Scroll_Status())point += 5 * (121-(Value.getTreasure8_Dragon_Scroll() - location));
+        int middle=61-location;
+        if (middle<0)middle*=-1;
 
-        if (location == Value.getWall1()) point -= 10000;
-        if (location == Value.getWall2()) point -= 10000;
-        if (location == Value.getWall3()) point -= 10000;
-        if (location == Value.getWall4()) point -= 10000;
-        if (location == Value.getWall5()) point -= 10000;
-        if (location == Value.getWall6()) point -= 10000;
-        if (location == Value.getWall7()) point -= 10000;
-        if (location == Value.getWall8()) point -= 10000;
+        for (int i=0;i<8;i++){
+            if (Treasure[i]!=0){
+                point+=((121-middle)*50);break;
+            }
+        }
+
+
+
 
         return point;
     }

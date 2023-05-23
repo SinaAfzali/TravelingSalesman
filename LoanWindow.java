@@ -5,6 +5,13 @@ import java.awt.event.*;
 
 public class LoanWindow extends JFrame {
 
+    static String text1="";
+    static String text2="";
+    static String text3="";
+    static String text4="";
+    static String text5="";
+    static String text6="";
+
     public LoanWindow() {
         // Initialize the loan window
         super("Loan Window");
@@ -26,11 +33,11 @@ public class LoanWindow extends JFrame {
 
         // Add six buttons for different loan budgets
         JButton button1 = new JButton("100");
-        JButton button2 = new JButton("500");
-        JButton button3 = new JButton("1000");
-        JButton button4 = new JButton("5000");
-        JButton button5 = new JButton("10000");
-        JButton button6 = new JButton("50000");
+        JButton button2 = new JButton("200");
+        JButton button3 = new JButton("300");
+        JButton button4 = new JButton("400");
+        JButton button5 = new JButton("500");
+        JButton button6 = new JButton("1000");
 
         // Set button fonts and colors
         Font buttonFont = new Font("Arial", Font.BOLD, 24);
@@ -57,7 +64,7 @@ public class LoanWindow extends JFrame {
         panel.add(button6);
 
         // Add a close button
-        JButton closeButton = new JButton("خروج");
+        JButton closeButton = new JButton(text1);
         closeButton.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
                 dispose();
@@ -80,20 +87,61 @@ public class LoanWindow extends JFrame {
 // Add labels to panel
         panel.add(paymentLabel);
 
-
+        paymentLabel.setFont(new Font("serif",Font.BOLD,18));
 
         // Add a confirmation dialog when the user clicks on a loan budget button
         ActionListener loanButtonListener = new ActionListener() {
             public void actionPerformed(ActionEvent e) {
+
+                if (Value.getLean_player1()==-2)Value.setLean_player1(-1);
+                if (Value.getLean_player2()==-2)Value.setLean_player2(-1);
+                if (Value.getLean_player3()==-2)Value.setLean_player3(-1);
+                if (Value.getLean_player4()==-2)Value.setLean_player4(-1);
+
                 JButton sourceButton = (JButton) e.getSource();
                 int loanAmount = Integer.parseInt(sourceButton.getText());
-                int confirmation = JOptionPane.showConfirmDialog(null, "آیا اطمینان دارید که مبلغ" + loanAmount + "را به عنوان وام بپذیرید ؟");
-                if (confirmation == JOptionPane.YES_OPTION) {
-                    System.out.println("Loan confirmed");
-                    // Update payment label when the user confirms the loan
-                    double amountToBePaidBack = loanAmount * 1.2; // assuming a 10% interest rate
-                    paymentLabel.setText("شما باید مبلغ" + amountToBePaidBack + " پس بدهید");
-                }
+                int confirmation = JOptionPane.showConfirmDialog(null, text2 + loanAmount + text3);
+
+                    if (confirmation == JOptionPane.YES_OPTION) {
+                        // Update payment label when the user confirms the loan
+                            if (Value.getPlayer() == 1) {
+                                if (Value.getLean_player1() == 0) {
+                                Value.setMoney_Player1(Value.getMoney_Player1() + loanAmount);
+                                Value.setLean_player1(1);
+                                Value.setMoney_Lean((long) (loanAmount * 1.2));
+                                    double amountToBePaidBack = loanAmount * 1.2; // assuming a 10% interest rate
+                                    paymentLabel.setText(text4 + amountToBePaidBack + text5);
+                            } else  paymentLabel.setText(text6);
+                        }
+                        else if (Value.getPlayer() == 2) {
+                            if (Value.getLean_player2()==0) {
+                                Value.setMoney_Player2(Value.getMoney_Player2() + loanAmount);
+                                Value.setLean_player2(1);
+                                Value.setMoney_Lean((long) (loanAmount * 1.2));
+                                double amountToBePaidBack = loanAmount * 1.2; // assuming a 10% interest rate
+                                paymentLabel.setText(text4 + amountToBePaidBack + text5);
+                            } else  paymentLabel.setText(text6);
+                        }
+                        else if (Value.getPlayer() == 3) {
+                            if (Value.getLean_player3()==0) {
+                                Value.setMoney_Player3(Value.getMoney_Player3() + loanAmount);
+                                Value.setLean_player3(1);
+                                Value.setMoney_Lean((long) (loanAmount * 1.2));
+                                double amountToBePaidBack = loanAmount * 1.2; // assuming a 10% interest rate
+                                paymentLabel.setText(text4 + amountToBePaidBack + text5);
+                            } else  paymentLabel.setText(text6);
+                        }
+                        if (Value.getPlayer() == 4) {
+                            if (Value.getLean_player4()==0) {
+                                Value.setMoney_Player4(Value.getMoney_Player4() + loanAmount);
+                                Value.setLean_player4(1);
+                                Value.setMoney_Lean((long) (loanAmount * 1.2));
+                                double amountToBePaidBack = loanAmount * 1.2; // assuming a 10% interest rate
+                                paymentLabel.setText(text4 + amountToBePaidBack + text5);
+                            } else  paymentLabel.setText(text6);
+                        }
+
+                    }
             }
         };
 
