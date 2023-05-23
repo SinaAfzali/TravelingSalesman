@@ -13,7 +13,7 @@ public class Castle extends JFrame {
     public static int status=0;
 
     public Castle() {
-        // Create the table with player data
+        // Create the table with data
         String[] columnNames = {"نام بازیکن", "قدرت", "پول", "امتیاز"};
         Object[][] data = {
                 {"بازیکن 1       ", Value.getPower_Player1(), Value.getMoney_Player1(),Value.getPower_Player1()*5+Value.getMoney_Player1() },
